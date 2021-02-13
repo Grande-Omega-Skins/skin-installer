@@ -1,0 +1,22 @@
+﻿<Window x:Class="GOSkinInstallerUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GOSkinInstallerUI"
+        mc:Ignorable="d"
+        Title="Grande Omega Skin Installer" Height="720" Width="1280" WindowState="Normal" Background="#FF1F1F1F" MinWidth="875" MinHeight="625" Icon="/icon.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ComboBox x:Name="Dropdown" HorizontalAlignment="Center" VerticalAlignment="Top" Width="275" Height="65" Loaded="Dropdown_Loaded" Padding="0,0,0,0" BorderThickness="0,0,0,0" FontSize="32" SelectionChanged="Dropdown_SelectionChanged" Background="#FF7289DA" FontFamily="Roboto Light" Margin="320,340,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF171717" MaxDropDownHeight="250"/>
+        <Button x:Name="InstallButton" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Top" Height="65" Width="275" FontSize="32" Click="InstallButton_Click" Background="#FF7289DA" Cursor="Arrow" Margin="0,340,320,0" IsEnabled="False" BorderThickness="0,0,0,0" ClipToBounds="True" FontFamily="Roboto Light" Foreground="#FF171717" FontWeight="Normal"/>
+        <Label Content="Skin Installer" Width="850" FontSize="120" Foreground="#FF7289DA" Height="162" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" FontStyle="Normal" FontFamily="Roboto Thin" Margin="0,175,0,0"/>
+        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" BorderThickness="0,0,0,0" Width="450" Margin="0,455,0,0"/>
+        <Label x:Name="ProgressText" HorizontalAlignment="Center" VerticalAlignment="Top" Width="446" Foreground="White" Margin="0,485,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="22" FontFamily="Roboto Light"/>
+        <Label Content="Version 2.0" Width="104" FontSize="20" Foreground="#FF7289DA" Height="29" HorizontalAlignment="Right" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Normal" FontStyle="Normal" FontFamily="Roboto Thin" Margin="0,0,10,10"/>
+        <Label Content="Grande Omega" Width="850" FontSize="60" Foreground="#FFE4E4E4" Height="162" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" FontStyle="Normal" FontFamily="Roboto Medium" Margin="0,75,0,0"/>
+        <Button x:Name="RefreshButton" HorizontalAlignment="Center" Margin="720,350,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#FF7289DA" BorderThickness="0,0,0,0" Click="RefreshButton_Click" Content="Refresh" Foreground="#FF171717" FontSize="20"/>
+    </Grid>
+</Window>

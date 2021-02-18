@@ -5,15 +5,23 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="fonts\Roboto-Bold.ttf" />
-    <None Remove="fonts\Roboto-Light.ttf" />
-    <None Remove="fonts\Roboto-Medium.ttf" />
-    <None Remove="fonts\Roboto-Regular.ttf" />
-    <None Remove="fonts\Roboto-Thin.ttf" />
+    <Compile Remove="fonts\**" />
+    <EmbeddedResource Remove="fonts\**" />
+    <None Remove="fonts\**" />
+    <Page Remove="fonts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="icon.ico" />
+    <None Remove="src\fonts\Roboto-Bold.ttf" />
+    <None Remove="src\fonts\Roboto-Light.ttf" />
+    <None Remove="src\fonts\Roboto-Medium.ttf" />
+    <None Remove="src\fonts\Roboto-Regular.ttf" />
+    <None Remove="src\fonts\Roboto-Thin.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,22 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="fonts\Roboto-Bold.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="fonts\Roboto-Light.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="fonts\Roboto-Medium.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="fonts\Roboto-Regular.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="fonts\Roboto-Thin.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="icon.ico" />
+    <Resource Include="src\fonts\Roboto-Bold.ttf" />
+    <Resource Include="src\fonts\Roboto-Light.ttf" />
+    <Resource Include="src\fonts\Roboto-Medium.ttf" />
+    <Resource Include="src\fonts\Roboto-Regular.ttf" />
+    <Resource Include="src\fonts\Roboto-Thin.ttf" />
   </ItemGroup>
 
 </Project>

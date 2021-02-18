@@ -38,7 +38,7 @@ namespace GOSkinInstallerUI
             {
                 button.IsEnabled = false;
                 downloadSkinsButton.IsEnabled = false;
-                button.Content = "Installing";
+                button.Content = "Installing...";
 
                 if (dropdown != null)
                     dropdown.IsEnabled = false;
@@ -119,14 +119,17 @@ namespace GOSkinInstallerUI
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             ReloadDropdownItems();
-        }       
+        }
 
         private void DownloadSkinsButton_Click(object sender, RoutedEventArgs e)
         {
             _ = Dispatcher.InvokeAsync(async () =>
             {
-                var client = new HttpClient();
-                string[] skins = ((JObject)JsonConvert.DeserializeObject(await client.GetStringAsync(_skinsJsonUrl)))["skins"].ToArray().Select(x => (string)x).ToArray();
+                if (!IsConnectedToInternet())
+                {
+                    MessageBox.Show("Can't download the skins from GitHub since no internet connection is established.", "No internet connection", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
 
                 var count = 0;
 
@@ -138,29 +141,39 @@ namespace GOSkinInstallerUI
 
                 Directory.CreateDirectory("skins/");
 
+                var client = new HttpClient();
+                string[] skins = ((JObject)JsonConvert.DeserializeObject(await client.GetStringAsync(_skinsJsonUrl)))["skins"].ToArray().Select(x => (string)x).ToArray();
+
                 foreach (var skin in skins)
                 {
-                    var zipPath = $"skins/{skin}.zip";
-                    var skinPath = $"skins/{skin}";
+                    try
+                    {
+                        var zipPath = $"skins/{skin}.zip";
+                        var skinPath = $"skins/{skin}";
 
-                    var byteArray = await GetByteArrayFromUrl(skin);
+                        var byteArray = await GetByteArrayFromUrl(skin);
 
-                    using (var fileStream = File.Create(zipPath))
-                        await fileStream.WriteAsync(byteArray);
+                        using (var fileStream = File.Create(zipPath))
+                            await fileStream.WriteAsync(byteArray);
 
-                    await Task.Run(() => ZipFile.ExtractToDirectory(zipPath, "skins/", true));
+                        await Task.Run(() => ZipFile.ExtractToDirectory(zipPath, "skins/", true));
 
-                    if (Directory.Exists(skinPath))
-                        await Task.Run(() => new DirectoryInfo(skinPath).Delete(true));
+                        if (Directory.Exists(skinPath))
+                            await Task.Run(() => new DirectoryInfo(skinPath).Delete(true));
 
-                    await Task.Run(() => Directory.Move($"{skinPath}-latest/{(skin == "default" ? "default" : "dist")}", skinPath));
-                    Directory.Delete($"{skinPath}-latest", recursive: true);
+                        await Task.Run(() => Directory.Move($"{skinPath}-latest/{(skin == "default" ? "default" : "dist")}", skinPath));
+                        Directory.Delete($"{skinPath}-latest", recursive: true);
 
-                    await Task.Run(() => File.Delete(zipPath));
+                        await Task.Run(() => File.Delete(zipPath));
 
-                    count++;
-                    ProgressText.Content = count < skins.Length ? $"Skin downloaded: {skin}" : "All skins downloaded!";
-                    ProgressBar.Value = (float)count / skins.Length * 100;
+                        count++;
+                        ProgressText.Content = count < skins.Length ? $"Skin downloaded: {skin}" : "All skins downloaded!";
+                        ProgressBar.Value = (float)count / skins.Length * 100;
+                    }
+                    catch
+                    { 
+                        continue;
+                    }
                 }
 
                 ReloadDropdownItems();
@@ -220,6 +233,20 @@ namespace GOSkinInstallerUI
                 return false;
             }
             return true;
+        }
+
+        private static bool IsConnectedToInternet()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.GetAsync("http://google.com/generate_204");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

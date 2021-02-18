@@ -1,12 +1,5 @@
 ﻿<Application x:Class="GOSkinInstallerUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-        <FontFamily x:Key="RobotoMedium">pack://application:,,,/fonts/Roboto-Medium#Roboto</FontFamily>
-        <FontFamily x:Key="RobotoThin">pack://application:,,,/fonts/Roboto-Thin#Roboto</FontFamily>
-        <FontFamily x:Key="RobotoLight">pack://application:,,,/fonts/Roboto-Light#Roboto</FontFamily>
-        <FontFamily x:Key="RobotoRegular">pack://application:,,,/fonts/Roboto-Regular#Roboto</FontFamily>
-        <FontFamily x:Key="RobotoBold">pack://application:,,,/fonts/Roboto-Bold#Roboto</FontFamily>
-    </Application.Resources>
+             StartupUri="src/MainWindow.xaml">
 </Application>

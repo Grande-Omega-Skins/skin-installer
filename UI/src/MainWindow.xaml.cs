@@ -137,7 +137,7 @@ namespace GOSkinInstallerUI
                 Dropdown.IsEnabled = false;
                 RefreshButton.IsEnabled = false;
                 DownloadSkinsButton.IsEnabled = false;
-                DownloadSkinsButton.Content = "Downloading";
+                DownloadSkinsButton.Content = "Downloading...";
 
                 Directory.CreateDirectory("skins/");
 
@@ -227,7 +227,7 @@ namespace GOSkinInstallerUI
 
         private static bool DefaultFolderCheck()
         {
-            if (!Directory.GetDirectories("skins/").Any(x => Path.GetFileName(x) == "default"))
+            if (Directory.Exists("skins/") && !Directory.GetDirectories("skins/").Any(x => Path.GetFileName(x) == "default"))
             {
                 MessageBox.Show("Default folder missing. Click the 'download skins' button to install the default skin.", "Missing default skin", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return false;

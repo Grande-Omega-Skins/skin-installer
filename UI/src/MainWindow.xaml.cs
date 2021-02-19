@@ -24,7 +24,7 @@ namespace GOSkinInstallerUI
             InitializeComponent();
         }        
         
-        private static async Task CopyFiles(Dispatcher dispatcher, Button button, Button downloadSkinsButton, ProgressBar progressBar, Label progressText, ComboBox dropdown = null, string skin = "", bool restoreDefaults = true)
+        private static async Task CopyFiles(Dispatcher dispatcher, Button button, Button downloadSkinsButton, Button refreshButton, ProgressBar progressBar, Label progressText, ComboBox dropdown = null, string skin = "", bool restoreDefaults = true)
         {
             skin = dropdown != null ? dropdown.Text : skin;
             var skinPath = $"skins/{skin}/";
@@ -38,6 +38,7 @@ namespace GOSkinInstallerUI
             {
                 button.IsEnabled = false;
                 downloadSkinsButton.IsEnabled = false;
+                refreshButton.IsEnabled = false;
                 button.Content = "Installing...";
 
                 if (dropdown != null)
@@ -45,7 +46,7 @@ namespace GOSkinInstallerUI
 
                 if (restoreDefaults)
                 {
-                    await RestoreDefaultFiles(dispatcher, button, downloadSkinsButton, progressBar, progressText, skin: "default");
+                    await RestoreDefaultFiles(dispatcher, button, downloadSkinsButton, refreshButton, progressBar, progressText, skin: "default");
                     if (skin == "default")
                     {
                         dropdown.IsEnabled = true;
@@ -74,12 +75,13 @@ namespace GOSkinInstallerUI
 
             button.IsEnabled = true;
             downloadSkinsButton.IsEnabled = true;
+            refreshButton.IsEnabled = true;
             button.Content = "Install";
             if (dropdown != null)
                 dropdown.IsEnabled = true;
         }
         
-        private static async Task RestoreDefaultFiles(Dispatcher dispatcher, Button button, Button downloadSkinsButton, ProgressBar progressBar, Label progressText, string skin = "")
+        private static async Task RestoreDefaultFiles(Dispatcher dispatcher, Button button, Button downloadSkinsButton, Button refreshButton, ProgressBar progressBar, Label progressText, string skin = "")
         {
             var defaultDestinationPath = "resources/app/desktop/Student/wwwroot/";
 
@@ -87,7 +89,7 @@ namespace GOSkinInstallerUI
                 await Task.Run(() => Directory.Delete(defaultDestinationPath, recursive: true));            
             Directory.CreateDirectory(defaultDestinationPath);
 
-            await CopyFiles(dispatcher, button, downloadSkinsButton, progressBar, progressText, skin: skin, restoreDefaults: false);
+            await CopyFiles(dispatcher, button, downloadSkinsButton, refreshButton, progressBar, progressText, skin: skin, restoreDefaults: false);
         }
 
         private async void Dropdown_Loaded(object sender, RoutedEventArgs e)
@@ -113,7 +115,7 @@ namespace GOSkinInstallerUI
 
         private async void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = await Dispatcher.InvokeAsync(async () => await CopyFiles(Dispatcher, InstallButton, DownloadSkinsButton, ProgressBar, ProgressText, Dropdown));
+            _ = await Dispatcher.InvokeAsync(async () => await CopyFiles(Dispatcher, InstallButton, DownloadSkinsButton, RefreshButton, ProgressBar, ProgressText, Dropdown));
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
